@@ -1,13 +1,25 @@
-# Starter pipeline!!!
+on:
+  push:
+    branches: "*"
 
-pool:
-  vmImage: 'Ubuntu 16.04'
+jobs:
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+  hello:
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    # Matrix
+    strategy:
+      matrix:
+        pool: [ DLLinux ]
+        
+    # Display name
+    name: Hello ${{ matrix.pool }}
+
+    # Pool
+    runs-on:
+      pool: ${{ matrix.pool }}
+
+    actions:
+
+      # Hello script
+      - name: Hello
+run: echo hello from ${{ matrix.pool }}
